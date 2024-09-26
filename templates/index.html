@@ -1,13 +1,12 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Welcome to UofT Validation{% endblock %}
+{% block title %}PRA2 Docker{% endblock %}
 
 {% block content %}
 <div class="container">
     <h1>Flask Form Example with UofT Email Validation</h1>
 
-    <!-- Flash messages for feedback -->
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -16,29 +15,25 @@
     {% endfor %}
 
     <div class="page-header">
-        <h2>Greetings, {% if name %}{{ name }}{% else %}Guest{% endif %}!</h2>
-        
-        <!-- Check for email and validate UofT email -->
+        <h2>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h2>
+
         {% if email %}
             {% if 'utoronto' in email %}
-                <h3>Your UofT email is {{ email }}</h3>
+                <h3>Your UofT email is {{ email }}. Welcome to PRA2 Docker!</h3>
             {% else %}
                 <h3 class="text-danger">Please enter a valid UofT email.</h3>
             {% endif %}
         {% endif %}
     </div>
 
-    <!-- Display current date and time using Flask-Moment -->
     <p>The local date and time is: {{ moment(current_time).format('LLLL') }}.</p>
     <p>This page was loaded {{ moment(current_time).fromNow(refresh=True) }}.</p>
 
-    <!-- Render the form using Flask-WTF -->
     {{ wtf.quick_form(form) }}
-
 </div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
-{{ moment.include_moment() }}  <!-- Include Moment.js functionality -->
+{{ moment.include_moment() }}
 {% endblock %}
